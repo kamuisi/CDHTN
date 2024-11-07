@@ -1,0 +1,20 @@
+16:48:07 **** Incremental Build of configuration Debug for project blink_led ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f1xx_it.d" -MT"Core/Src/stm32f1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_it.o"
+arm-none-eabi-gcc -o "blink_led.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\SUS\Desktop\CDHTN\lab_1\blink_led\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="blink_led.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: blink_led.elf
+ 
+arm-none-eabi-size  blink_led.elf 
+arm-none-eabi-objdump -h -S blink_led.elf  > "blink_led.list"
+   text	   data	    bss	    dec	    hex	filename
+   8488	     16	   1784	  10288	   2830	blink_led.elf
+arm-none-eabi-objcopy  -O binary blink_led.elf  "blink_led.bin"
+Finished building: default.size.stdout
+ 
+Finished building: blink_led.bin
+Finished building: blink_led.list
+ 
+ 
+
+16:48:08 Build Finished. 0 errors, 0 warnings. (took 1s.92ms)
+
