@@ -33,7 +33,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define PULSE_PER_ROUND 1750
-#define TIME_SAMPLE 2
+#define TIME_SAMPLE 0.1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
