@@ -126,7 +126,9 @@ void Read_Service_Handler(void)
 {
 	if(RxData[2] == RecordDataIdentifier_High_Byte && RxData[3] == RecordDataIdentifier_Low_Byte)
 	{
-		HAL_UART_Transmit(&huart1, RxData[4], 1, 100);
+		char text[4];
+		sprintf(text, "%u", RxData[4]);
+		HAL_UART_Transmit(&huart1, (uint8_t*)text, 5, 100);
 	}
 }
 
