@@ -78,7 +78,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	 if(htim->Instance == htim3.Instance)
 	 {
-		float error = target_RPM[state_RPM] - current_RPM;
+		float error = target_RPM[state_RPM] - __HAL_TIM_GET_COUNTER(&htim2) * 600 / PULSE_PER_ROUND;
 		float Pout = Kp * error;
 		float Dout = Kd * (error - old_error) / TIME_SAMPLE;
 		sum_error+=error;
@@ -146,7 +146,10 @@ int main(void)
   {
 	  HAL_Delay(1000);
 	  encoder_data = __HAL_TIM_GET_COUNTER(&htim2);
-	  encoder_data= 65535 - encoder_data;
+	  if(encoder_data != 0)
+	  {
+		  encoder_data= 65535 - encoder_data;
+	  }
 	  current_RPM = encoder_data*60 / PULSE_PER_ROUND;
 	  sprintf(text_data, "RPM: %u", current_RPM);
 	  __HAL_TIM_SET_COUNTER(&htim2, 0);
