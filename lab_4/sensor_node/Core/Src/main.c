@@ -334,6 +334,7 @@ int main(void)
 	  Send_SF_Security();
 	  HAL_Delay(2000);
 	  Send_SF_Write();
+	  HAL_Delay(2000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
