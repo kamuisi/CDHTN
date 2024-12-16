@@ -165,13 +165,11 @@ int main(void)
   FLASH_ReadPage();
   if(FLASH_CompareData())
   {
-	  HAL_GPIO_WritePin(LEDG_GPIO_Port, LEDG_Pin, 1);
-	  HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, 0);
+	  HAL_GPIO_WritePin(LEDG_GPIO_Port, LEDG_Pin, 0);
   }
   else
   {
-	  HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, 1);
-	  HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDG_Pin, 0);
+	  HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, 0);
   }
   VL53L1X_StartRanging(VL53L1_0_ADDR);
   VL53L1X_StartRanging(VL53L1_1_ADDR);
@@ -320,7 +318,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(XShut0_GPIO_Port, XShut0_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LEDG_Pin|LEDR_Pin|XShut1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LEDG_Pin|LEDR_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(XShut1_GPIO_Port, XShut1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : GPIO1_0_Pin */
   GPIO_InitStruct.Pin = GPIO1_0_Pin;
@@ -335,19 +336,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(XShut0_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LEDG_Pin LEDR_Pin */
-  GPIO_InitStruct.Pin = LEDG_Pin|LEDR_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : XShut1_Pin */
-  GPIO_InitStruct.Pin = XShut1_Pin;
+  /*Configure GPIO pins : LEDG_Pin LEDR_Pin XShut1_Pin */
+  GPIO_InitStruct.Pin = LEDG_Pin|LEDR_Pin|XShut1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(XShut1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : GPIO1_1_Pin */
   GPIO_InitStruct.Pin = GPIO1_1_Pin;
