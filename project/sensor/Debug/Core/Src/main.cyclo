@@ -1,0 +1,12 @@
+../Core/Src/main.c:79:6:Start_CAN	2
+../Core/Src/main.c:88:6:Start_sensor	3
+../Core/Src/main.c:98:6:Read_sensor	1
+../Core/Src/main.c:104:6:Send_CAN	2
+../Core/Src/main.c:112:6:Avoid_Object	5
+../Core/Src/main.c:142:5:main	1
+../Core/Src/main.c:192:6:SystemClock_Config	3
+../Core/Src/main.c:232:13:MX_CAN_Init	2
+../Core/Src/main.c:269:13:MX_I2C1_Init	2
+../Core/Src/main.c:303:13:MX_USART1_UART_Init	2
+../Core/Src/main.c:336:13:MX_GPIO_Init	1
+../Core/Src/main.c:392:6:Error_Handler	1

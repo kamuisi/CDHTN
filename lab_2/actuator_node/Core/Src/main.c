@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define PULSE_PER_ROUND 1750
+#define PULSE_PER_ROUND 10582
 #define TIME_SAMPLE 0.1
 /* USER CODE END PD */
 
@@ -51,13 +51,14 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 const float Kp = 1.5;
-const float Ki = 0.1;
+const float Ki = 0.5;
 const float Kd = 0.05;
-const int16_t target_RPM[] = {0, 5, 10, 15, 20};
-static int16_t current_RPM = 0;
-static float sum_error = 0;
-static int16_t old_error = 0;
+const int target_RPM[] = {0, 10, 20, 30, 40};
+static int current_RPM = 0;
+static int sum_error = 0;
+static int old_error = 0;
 static int state_RPM = 1;
+char text_data[20];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -78,12 +79,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	 if(htim->Instance == htim3.Instance)
 	 {
-		float error = target_RPM[state_RPM] - __HAL_TIM_GET_COUNTER(&htim2) * 600 / PULSE_PER_ROUND;
+		 uint16_t encoder_data = __HAL_TIM_GET_COUNTER(&htim2);
+		 __HAL_TIM_SET_COUNTER(&htim2, 0);
+		 current_RPM = (int)encoder_data*600/ PULSE_PER_ROUND;
+		sprintf(text_data, "\n\rRPM: %d", current_RPM);
+		HAL_UART_Transmit(&huart1, (uint8_t*)text_data, sizeof(text_data), 100);
+		int error = target_RPM[state_RPM] - current_RPM;
 		float Pout = Kp * error;
 		float Dout = Kd * (error - old_error) / TIME_SAMPLE;
 		sum_error+=error;
 		float Iout = Ki * sum_error * TIME_SAMPLE;
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, (uint16_t)(Pout + Iout + Dout));
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, (int)(Pout + Dout + Iout));
 		old_error = error;
 	  }
 	 if(htim->Instance == htim4.Instance)
@@ -132,8 +138,7 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  char text_data[20];
-  uint16_t encoder_data;
+//  char text_data[20];
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
   HAL_TIM_Base_Start_IT(&htim3);
@@ -144,16 +149,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_Delay(1000);
-	  encoder_data = __HAL_TIM_GET_COUNTER(&htim2);
-	  if(encoder_data != 0)
-	  {
-		  encoder_data= 65535 - encoder_data;
-	  }
-	  current_RPM = encoder_data*60 / PULSE_PER_ROUND;
-	  sprintf(text_data, "RPM: %u", current_RPM);
-	  __HAL_TIM_SET_COUNTER(&htim2, 0);
-	  HAL_UART_Transmit(&huart1, (uint8_t*)text_data, sizeof(text_data), 100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -153,13 +153,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
   uint16_t Distance_0 = 0;
   uint16_t Distance_1 = 0;
-  char Data[20] = "";
-  uint16_t Data_len = 20;
+  char Data[20];
+  uint16_t Data_len;
   HAL_GPIO_WritePin(XShut0.Port, XShut0.Pin, 0);
   HAL_GPIO_WritePin(XShut1.Port, XShut1.Pin, 0);
-  while(VL53L1__Init(VL53L1_0_ADDR, XShut0) != 0){}
   while(VL53L1__Init(VL53L1_1_ADDR, XShut1) != 0){}
-
+  while(VL53L1__Init(VL53L1_0_ADDR, XShut0) != 0){}
   HAL_Delay(500);
   FLASH_WritePage();
   FLASH_ReadPage();
@@ -181,6 +180,7 @@ int main(void)
   {
 	  VL53L1__GetDistance(VL53L1_0_ADDR, GPIO1_0, &Distance_0);
 	  VL53L1__GetDistance(VL53L1_1_ADDR, GPIO1_1, &Distance_1);
+	  memset(Data, 0, sizeof(Data));
 	  Data_len = sprintf(Data, "\n\r%u %u", Distance_0, Distance_1);
 	  HAL_UART_Transmit(&huart1, (uint8_t*)Data, Data_len, 100);
 	  HAL_Delay(100);
