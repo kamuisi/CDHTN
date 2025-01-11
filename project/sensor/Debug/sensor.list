@@ -2454,9 +2454,9 @@ void Avoid_Object(void)
  8001462:	429a      	cmp	r2, r3
  8001464:	d205      	bcs.n	8001472 <Avoid_Object+0x36>
 		{
-			TxData[0] = 180;
+			TxData[0] = 25;
  8001466:	4b0f      	ldr	r3, [pc, #60]	@ (80014a4 <Avoid_Object+0x68>)
- 8001468:	22b4      	movs	r2, #180	@ 0xb4
+ 8001468:	2219      	movs	r2, #25
  800146a:	701a      	strb	r2, [r3, #0]
 			HAL_Delay(100);
  800146c:	2064      	movs	r0, #100	@ 0x64
@@ -2470,9 +2470,9 @@ void Avoid_Object(void)
  800147a:	429a      	cmp	r2, r3
  800147c:	d909      	bls.n	8001492 <Avoid_Object+0x56>
 		{
-			TxData[0] = 90;
+			TxData[0] = 5;
  800147e:	4b09      	ldr	r3, [pc, #36]	@ (80014a4 <Avoid_Object+0x68>)
- 8001480:	225a      	movs	r2, #90	@ 0x5a
+ 8001480:	2205      	movs	r2, #5
  8001482:	701a      	strb	r2, [r3, #0]
 		if(Distance_0 > Distance_1)
  8001484:	e005      	b.n	8001492 <Avoid_Object+0x56>
@@ -2480,9 +2480,9 @@ void Avoid_Object(void)
 	}
 	else
 	{
-		TxData[0] = 0;
+		TxData[0] = 15;
  8001486:	4b07      	ldr	r3, [pc, #28]	@ (80014a4 <Avoid_Object+0x68>)
- 8001488:	2200      	movs	r2, #0
+ 8001488:	220f      	movs	r2, #15
  800148a:	701a      	strb	r2, [r3, #0]
 		TxData[1] = 40;
  800148c:	4b05      	ldr	r3, [pc, #20]	@ (80014a4 <Avoid_Object+0x68>)

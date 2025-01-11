@@ -117,17 +117,17 @@ void Avoid_Object(void)
 		TxData[1] = 20;
 		if(Distance_0 < Distance_1)
 		{
-			TxData[0] = 180;
+			TxData[0] = 25;
 			HAL_Delay(100);
 		}
 		if(Distance_0 > Distance_1)
 		{
-			TxData[0] = 180;
+			TxData[0] = 5;
 		}
 	}
 	else
 	{
-		TxData[0] = 0;
+		TxData[0] = 15;
 		TxData[1] = 40;
 	}
 	Send_CAN();
